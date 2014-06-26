@@ -78,8 +78,8 @@ USING gist
 
 --\copy taxi_trips(name,address,date_built,architect,landmark,latitude,longitude) FROM '/local/path/to/Individual_Landmarks.csv' DELIMITERS ',' CSV HEADER;
 
-\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/short_trip_data.csv' DELIMITERS ',' CSV HEADER;
---\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/trip_data_1.csv'  DELIMITERS ',' CSV HEADER;
+--\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/short_trip_data.csv' DELIMITERS ',' CSV HEADER;
+\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/trip_data_1.csv'  DELIMITERS ',' CSV HEADER;
 
 
 UPDATE
