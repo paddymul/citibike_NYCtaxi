@@ -1,7 +1,7 @@
 
 --"tripduration","starttime","stoptime","start station id","start station name","start station latitude","start station longitude","end station id","end station name","end station latitude","end station longitude","bikeid","usertype","birth year","gender"
 --"634","2013-07-01 00:00:00","2013-07-01 00:10:34","164","E 47 St & 2 Ave","40.75323098","-73.97032517","504","1 Ave & E 15 St","40.73221853","-73.98165557","16950","Customer",\N,"0"
---DROP TABLE citibike_trips;
+DROP TABLE citibike_trips;
 CREATE TABLE citibike_trips
 (
 cb_trip_key    serial primary key,
@@ -77,5 +77,28 @@ FROM
 ORDER BY
          dist DESC 
 LIMIT 30; 
--- ST_Transform(ST_GeomFromText('POINT(-72.1235 42.3521)',4326)
--- ,26986),
+
+
+DROP TABLE citibike_stations;
+CREATE TABLE citibike_stations AS
+SELECT
+        DISTINCT
+        cbt.start_station_id AS station_id,
+        cbt.start_station_latitude as latitude,
+        cbt.start_station_longitude AS longitude,
+        cbt.start_station_name AS station_name
+FROM 
+        citibike_trips AS cbt;
+
+
+SELECT 
+       ST_Distance(
+           ST_GeomFromText('POINT(40.7536363 -73.9694206)', 4326),
+           ST_GeomFromText('POINT(40.7538472 -73.9722039)', 4326)) AS
+      ONE_DIAGANOL_BLOCK;
+       )
+
+-- This is the distnace from 3rd Ave and 47th st to 2nd Ave and 48th st
+-- https://www.google.com/maps/dir/40.7536363,-73.9694206/40.7538472,-73.9722039/@40.7537764,-73.9718794,18z/data=!3m1!4b1!4m3!4m2!1m0!1m0
+-- 0.00279127886459734
+
