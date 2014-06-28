@@ -116,6 +116,7 @@ WHERE
         ST_Distance(cbs.station_geom, taxi_trips.pickup_geom)  < 0.00279127886459734;
 
 
+DROP TABLE similar_taxi_trips;
 CREATE TABLE similar_taxi_trips AS
 SELECT                  
         similar_taxi_starts.start_station_id,
@@ -128,5 +129,7 @@ FROM
         citibike_stations AS cbs,
         taxi_trips
 WHERE
-        ST_Distance(cbs.station_geom, taxi_trips.dropoff_geom) < 0.00279127886459734;
-
+        ST_Distance(cbs.station_geom, taxi_trips.dropoff_geom) < 0.00279127886459734 AND
+        taxi_trips.taxi_trip_id = similar_taxi_starts.taxi_trip_id;
+        
+        
