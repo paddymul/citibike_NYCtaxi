@@ -67,6 +67,9 @@ UPDATE
 SET
         end_station_geom = ST_GeomFromText('POINT(' || end_station_longitude || ' ' || end_station_latitude ||')', 4326);
 
+CREATE INDEX start_end_station_idx ON citibike_trips (start_station_id, end_station_id);
+
+
 
 SELECT
          ST_Distance(start_station_geom, end_station_geom) AS dist, 
@@ -90,6 +93,13 @@ SELECT
         ST_GeomFromText('POINT(' || start_station_longitude || ' ' || start_station_latitude ||')', 4326) AS station_geom
 FROM 
         citibike_trips AS cbt;
+
+CREATE INDEX station_geom_gist
+ON citibike_stations
+USING gist
+(station_geom);
+
+CREATE INDEX cbs_station_id_idx ON citibike_stations (station_id);
 
 
 SELECT 
@@ -115,6 +125,8 @@ FROM
 WHERE
         ST_Distance(cbs.station_geom, taxi_trips.pickup_geom)  < 0.00279127886459734;
 
+CREATE INDEX similar_taxi_starts_trip_id_idx ON similar_taxi_starts (taxi_trip_id);
+
 
 DROP TABLE similar_taxi_trips;
 CREATE TABLE similar_taxi_trips AS
@@ -133,3 +145,4 @@ WHERE
         taxi_trips.taxi_trip_id = similar_taxi_starts.taxi_trip_id;
         
         
+CREATE INDEX similar_taxi_trip_id_idx ON similar_taxi_trips (taxi_trip_id);
