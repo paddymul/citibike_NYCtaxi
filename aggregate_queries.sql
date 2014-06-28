@@ -102,16 +102,23 @@ SELECT
         tas.start_station_id AS start_id, tas.end_station_id AS end_id,
         ROUND(tas.avg_taxi_time,2) AS avg_taxi, ROUND(cas.cb_trip_duration,2) AS avg_cb, 
         ROUND(cas.cb_trip_duration -tas.avg_taxi_time,  2) AS diff,
-        tas.tt_trip_count AS tt_cnt, cas.cb_trip_count AS cb_cnt
+        tas.tt_trip_count AS tt_cnt, cas.cb_trip_count AS cb_cnt,
+        'https://www.google.com/maps/dir/' || cs1.latitude || ','|| cs1.longitude || '/' ||  cs2.latitude ||','|| cs2.longitude
 FROM
         citibike_agg_stat AS cas,
-        taxi_agg_stat AS tas
+        taxi_agg_stat AS tas,
+        citibike_stations as cs1,
+        citibike_stations as cs2
+
 WHERE                   
         tas.start_station_id  = cas.start_station_id AND
         tas.end_station_id  = cas.end_station_id AND 
         cas.start_station_id <> cas.end_station_id AND
         tt_trip_count > 10 AND
-        cb_trip_count > 10
+        cb_trip_count > 10 AND
+        cs1.station_id = cas.start_station_id AND
+        cs2.station_id = cas.end_station_id
+
 ORDER BY diff
 LIMIT 50;
 
