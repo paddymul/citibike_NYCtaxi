@@ -1,5 +1,7 @@
 
 
+-- http://www.kevfoo.com/2012/01/Importing-CSV-to-PostGIS/
+
 -- -- DROP TABLE landmarks2;
 
 -- CREATE TABLE landmarks2
@@ -32,7 +34,7 @@
 DROP TABLE taxi_trips;
 CREATE TABLE taxi_trips
 (
-        mytable_key    serial primary key,
+mytable_key    serial primary key,
         medallion character varying(50),
         hack_license  character varying(50),
         vendor_id  character varying(50),
@@ -65,21 +67,21 @@ ALTER TABLE taxi_trips
 OWNER TO postgres;
  
 
-CREATE INDEX pickup_geom_gist
-ON taxi_trips
-USING gist
-(pickup_geom);
+-- CREATE INDEX pickup_geom_gist
+-- ON taxi_trips
+-- USING gist
+-- (pickup_geom);
 
-CREATE INDEX dropoff_geom_gist
-ON taxi_trips
-USING gist
-(dropoff_geom);
+-- CREATE INDEX dropoff_geom_gist
+-- ON taxi_trips
+-- USING gist
+-- (dropoff_geom);
 
 
---\copy taxi_trips(name,address,date_built,architect,landmark,latitude,longitude) FROM '/local/path/to/Individual_Landmarks.csv' DELIMITERS ',' CSV HEADER;
 
---\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/short_trip_data.csv' DELIMITERS ',' CSV HEADER;
-\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/trip_data_1.csv'  DELIMITERS ',' CSV HEADER;
+
+copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/citibike_NYCtaxi/data/short_trip_data.csv' DELIMITERS ',' CSV HEADER;
+--\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/trip_data_1.csv'  DELIMITERS ',' CSV HEADER;
 
 
 UPDATE

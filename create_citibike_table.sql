@@ -1,7 +1,7 @@
 
 --"tripduration","starttime","stoptime","start station id","start station name","start station latitude","start station longitude","end station id","end station name","end station latitude","end station longitude","bikeid","usertype","birth year","gender"
 --"634","2013-07-01 00:00:00","2013-07-01 00:10:34","164","E 47 St & 2 Ave","40.75323098","-73.97032517","504","1 Ave & E 15 St","40.73221853","-73.98165557","16950","Customer",\N,"0"
-drop table citibike_trips;
+--DROP TABLE citibike_trips;
 CREATE TABLE citibike_trips
 (
 cb_trip_key    serial primary key,
@@ -42,20 +42,20 @@ OWNER TO postgres;
  
 
 
-CREATE INDEX start_station_geom_gist
-ON citibike_trips
-USING gist
-(start_station_geom);
+-- CREATE INDEX start_station_geom_gist
+-- ON citibike_trips
+-- USING gist
+-- (start_station_geom);
 
-CREATE INDEX end_station_geom_gist
-ON citibike_trips
-USING gist
-(end_station_geom);
-
-
+-- CREATE INDEX end_station_geom_gist
+-- ON citibike_trips
+-- USING gist
+-- (end_station_geom);
 
 
-\copy citibike_trips(trip_duration, starttime, stoptime, start_station_id, start_station_name, start_station_latitude, start_station_longitude, end_station_id, end_station_name, end_station_latitude, end_station_longitude, bikeid, usertype, birth_year, gender) FROM '/Users/paddy/code/taxi_citibike/data/cb_short.csv' DELIMITERS ',' CSV HEADER;
+
+
+\copy citibike_trips(trip_duration, starttime, stoptime, start_station_id, start_station_name, start_station_latitude, start_station_longitude, end_station_id, end_station_name, end_station_latitude, end_station_longitude, bikeid, usertype, birth_year, gender) FROM 'data/cb_short.csv' DELIMITERS ',' CSV HEADER;
 
 UPDATE
 citibike_trips
