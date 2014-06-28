@@ -55,7 +55,8 @@ OWNER TO postgres;
 
 
 
-\copy citibike_trips(trip_duration, starttime, stoptime, start_station_id, start_station_name, start_station_latitude, start_station_longitude, end_station_id, end_station_name, end_station_latitude, end_station_longitude, bikeid, usertype, birth_year, gender) FROM 'data/cb_short.csv' DELIMITERS ',' CSV HEADER;
+--\copy citibike_trips(trip_duration, starttime, stoptime, start_station_id, start_station_name, start_station_latitude, start_station_longitude, end_station_id, end_station_name, end_station_latitude, end_station_longitude, bikeid, usertype, birth_year, gender) FROM 'data/cb_short.csv' DELIMITERS ',' CSV HEADER;
+\copy citibike_trips(trip_duration, starttime, stoptime, start_station_id, start_station_name, start_station_latitude, start_station_longitude, end_station_id, end_station_name, end_station_latitude, end_station_longitude, bikeid, usertype, birth_year, gender) FROM 'data/cb_short.csv' DELIMITERS ',' CSV;
 
 UPDATE
 citibike_trips
