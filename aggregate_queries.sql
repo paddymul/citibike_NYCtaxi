@@ -8,14 +8,14 @@ SELECT
 
 SELECT
         stt.start_station_id, stt.end_station_id, count(*) AS cnt,
-        avg(taxi_trips.trip_time_in_secs) AS avg_taxi_time,
-        avg(citibike_trips.trip_duration) AS avg_cb_time,
-        avg(citibike_trips.trip_duration) - avg(taxi_trips.trip_time_in_secs) AS time_diff,
-        'https://www.google.com/maps/dir/' || cs1.latitude || ','|| cs1.longitude || '/' ||  cs2.latitude ||','|| cs2.longitude,
         (SELECT COUNT(*) 
-         FROM citibike_trips AS cbt1 
-         WHERE cbt1.start_station_id = citibike_trips.start_station_id AND 
-         cbt1.end_station_id = citibike_trips.end_station_id) AS cb_trip_count
+        FROM citibike_trips AS cbt1 
+        WHERE cbt1.start_station_id = citibike_trips.start_station_id AND 
+        cbt1.end_station_id = citibike_trips.end_station_id) AS cb_trip_count,
+        round(avg(taxi_trips.trip_time_in_secs),2) AS avg_taxi_time,
+        round(avg(citibike_trips.trip_duration),2) AS avg_cb_time,
+        round(avg(citibike_trips.trip_duration) - avg(taxi_trips.trip_time_in_secs),2) AS time_diff,
+        'https://www.google.com/maps/dir/' || cs1.latitude || ','|| cs1.longitude || '/' ||  cs2.latitude ||','|| cs2.longitude
 FROM
         similar_taxi_trips AS stt,
         taxi_trips,
@@ -34,5 +34,5 @@ GROUP BY
         cs1.latitude, cs1.longitude, cs2.latitude, cs2.longitude,
         cb_trip_count
 ORDER BY
-        cnt DESC 
+        cb_trip_count DESC 
 LIMIT 30;
