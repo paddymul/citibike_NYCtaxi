@@ -34,7 +34,7 @@
 DROP TABLE taxi_trips;
 CREATE TABLE taxi_trips
 (
-mytable_key    serial primary key,
+        taxi_trip_id serial primary key,
         medallion character varying(50),
         hack_license  character varying(50),
         vendor_id  character varying(50),
@@ -80,7 +80,7 @@ OWNER TO postgres;
 
 
 
-copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/citibike_NYCtaxi/data/short_trip_data.csv' DELIMITERS ',' CSV HEADER;
+\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM 'data/short_trip_data.csv' DELIMITERS ',' CSV HEADER;
 --\copy taxi_trips(medallion,hack_license,vendor_id,rate_code,store_and_fwd_flag,pickup_datetime,dropoff_datetime,passenger_count,trip_time_in_secs,trip_distance,pickup_longitude,pickup_latitude,dropoff_longitude,dropoff_latitude) FROM '/Users/paddy/code/taxi_citibike/data/trip_data_1.csv'  DELIMITERS ',' CSV HEADER;
 
 

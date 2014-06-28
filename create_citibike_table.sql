@@ -86,7 +86,8 @@ SELECT
         cbt.start_station_id AS station_id,
         cbt.start_station_latitude as latitude,
         cbt.start_station_longitude AS longitude,
-        cbt.start_station_name AS station_name
+        cbt.start_station_name AS station_name,
+        ST_GeomFromText('POINT(' || start_station_longitude || ' ' || start_station_latitude ||')', 4326) AS station_geom
 FROM 
         citibike_trips AS cbt;
 
@@ -96,9 +97,36 @@ SELECT
            ST_GeomFromText('POINT(40.7536363 -73.9694206)', 4326),
            ST_GeomFromText('POINT(40.7538472 -73.9722039)', 4326)) AS
       ONE_DIAGANOL_BLOCK;
-       )
+       
 
 -- This is the distnace from 3rd Ave and 47th st to 2nd Ave and 48th st
 -- https://www.google.com/maps/dir/40.7536363,-73.9694206/40.7538472,-73.9722039/@40.7537764,-73.9718794,18z/data=!3m1!4b1!4m3!4m2!1m0!1m0
 -- 0.00279127886459734
+
+DROP TABLE similar_taxi_starts;
+CREATE TABLE similar_taxi_starts AS
+SELECT
+        cbs.station_id AS start_station_id,
+        taxi_trips.taxi_trip_id,
+        ST_Distance(cbs.station_geom, taxi_trips.pickup_geom) AS start_dist
+FROM 
+        citibike_stations AS cbs,
+        taxi_trips
+WHERE
+        ST_Distance(cbs.station_geom, taxi_trips.pickup_geom)  < 0.00279127886459734;
+
+
+CREATE TABLE similar_taxi_trips AS
+SELECT                  
+        similar_taxi_starts.start_station_id,
+        cbs.station_id AS end_station_id,
+        similar_taxi_starts.taxi_trip_id,
+        similar_taxi_starts.start_dist,
+        ST_Distance(cbs.station_geom, taxi_trips.dropoff_geom) AS end_dist
+FROM 
+        similar_taxi_starts,
+        citibike_stations AS cbs,
+        taxi_trips
+WHERE
+        ST_Distance(cbs.station_geom, taxi_trips.dropoff_geom) < 0.00279127886459734;
 
